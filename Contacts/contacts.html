@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Pabitra Pando</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Contact Me</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./about.html">About</a></li>
+            <li><a href="./projects.html">Projects</a></li>
+            <li><a href="./technologies.html">Technologies</a></li>
+            <li><a href="./contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    <section>
+        <p>Get in touch with me through these platforms:</p>
+        <ul id="contact-list" class="Project_li">
+            <div class="contact_div">
+                <li>Phone: +91 7099644556 </li>
+                <li>Email: <a href="mailto:pandopabitra1@gmail.com">pandopabitra1@gmail.com</a></li>
+                <li>Facebook: <a href="https://facebook.com/pabitrapando">facebook.com/pabitra</a></li>
+                <li>Instagram: <a href="https://instagram.com/pabitrapando">instagram.com/pabitra</a></li>
+                <li>LinkedIn: <a href="https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile">linkedin.com/in/pabitra</a></li>
+                <li>Indeed: <a href="https://indeed.com/pabitrapando">indeed.com/pabitra</a></li>
+                <li>GitHub: <a href="https://github.com/pabitrapando">github.com/pabitra</a></li>
+            </div>
+        </ul>
+        <button onclick="hideContacts()">Hide Contact Info</button>
+        <button onclick="showContacts()">Show Contact Info</button>
+    </section>
+    <script>
+        function hideContacts() {
+            document.getElementById('contact-list').style.display = 'none';
+        }
+        
+        function showContacts() {
+            document.getElementById('contact-list').style.display = 'block';
+        }
+    </script>
+    <footer>
+        <p>&copy; 2025 Pabitra Pando</p>
+    </footer>
+</body>
+<script src="script.js"></script>
+</html>
