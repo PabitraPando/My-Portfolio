@@ -182,6 +182,13 @@ nav ul li a:hover {
     section {
         padding: 15px;
     }
+    .contact_div{
+        position: relative;
+        left: 30px;
+    }
+    .contact_div li{
+        font-size: 15px;
+    }
 }
 
 @media (max-width: 400px) {
@@ -197,5 +204,12 @@ nav ul li a:hover {
     button {
         font-size: 0.9rem;
         padding: 10px 15px;
+    }
+    .contact_div{
+        position: relative;
+        left: 5px;
+    }
+    .contact_div li{
+        font-size: 10px;
     }
 }
