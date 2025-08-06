@@ -154,13 +154,121 @@ body {
 	border-radius: 4px;
 	transition: 0.3s;
 }
-#feature .fe-box:hover{
-	width: 180px;
-	text-align: center;
-	padding: 25px 15px;
-	box-shadow: 10px 10px 54px rgba(0, 0, 0, 0.1);
-	border: 1px solid rgb(255, 255, 255);
-	border-radius: 4px;
-	margin: 15px 0;
-	border-radius: 4px;
+#feature{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
 }
+#feature .fe-box:hover{
+	
+	box-shadow: 10px 10px 54px rgba(0, 0, 0, 0.1);
+	border: 1px solid rgb(0, 0, 0);
+	
+}
+#feature .fe-box img{
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+#feature .fe-box h6{
+	color: #088178;
+	background-color: rgb(252, 219, 219);
+	padding: 9px 7px 9px 7px;
+	border-radius: 5px;
+	display: inline-block;
+	transition-duration: 0.5s;
+}
+#feature .fe-box:nth-child(2) h6{
+	background-color: rgb(193, 245, 193);
+}
+#feature .fe-box:nth-child(3) h6{
+	background-color: rgb(230, 193, 245);
+}
+#feature .fe-box:nth-child(4) h6{
+	background-color: rgb(130, 189, 245);
+}
+#feature .fe-box:nth-child(5) h6{
+	background-color: rgb(204, 248, 101);
+}
+#feature .fe-box:nth-child(6) h6{
+	background-color: rgb(151, 247, 247);
+}
+#feature .fe-box h6:hover{
+	font-size: 13px;
+}
+/* Product Section */
+#product1{
+	text-align: center;
+}
+
+#product1 .pro-container{
+	display: flex;
+	justify-content: space-between;
+	padding-top: 20px;
+	flex-wrap: wrap;
+}
+
+#product1 .pro{
+	width: 23%;
+	min-width: 250px;
+	padding: 10px 12px;
+	border: 1px solid #cce7d0;
+	border-radius: 25px;
+	cursor: pointer;
+	box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.2);
+	margin: 20px 0;
+	position: relative;
+	margin-bottom: 20px;
+}
+#product1 .pro:hover{
+	box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.6);
+	transition: 0.2s ease;
+}
+#product1 .pro img{
+	width: 100%;
+border-radius: 20px;
+}
+
+#product1 .pro .description{
+	text-align: start;
+	padding: 10px 0;
+}
+
+#product1 .pro .description span{
+	color: #606063;
+	font-size: 12px;
+}
+
+#product1 .pro  .description h5{
+	padding-top: 7px;
+color: #1a1a1a;
+font-size: 14px;
+}
+
+#product1 .pro  .description i{
+font-size: 12px;
+color: gold;
+}
+
+#product1 .pro  .description h4{
+	padding-top: 7px;
+	font-size: 15px;
+	font-weight: 700;
+	color: #088178;
+}
+
+#product1 .pro .cart{
+	position: absolute;
+	bottom: 15px;
+	right: 15px;
+	background-color: #e8f6ea;
+	border-radius: 50px;
+	color: #088178;
+	border: 1px solid #cce7d0;
+	height: 40px;
+	width: 40px;
+	line-height: 40px;
+}
+
+
