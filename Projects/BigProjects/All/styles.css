@@ -87,7 +87,7 @@ body {
 }
 
 /* list spacing */
-#navber li {
+#navbar li {
 	list-style: none;
 	padding: 0px 20px;
 	position: relative;
@@ -95,7 +95,7 @@ body {
 
 /* a tag style  */
 
-#navber li a {
+#navbar li a {
 	text-decoration: none;
 	font-size: 16px;
 	font-weight: 600;
@@ -105,13 +105,13 @@ body {
 
 /* hover effect for links */
 
-#navber li a:hover,
-#navber li a.active {
+#navbar li a:hover,
+#navbar li a.active {
 	color: #088178;
 }
 
-#navber li a.active::after,
-#navber li a:hover::after {
+#navbar li a.active::after,
+#navbar li a:hover::after {
 	content: "";
 	width: 30%;
 	height: 3px;
@@ -574,7 +574,7 @@ footer .copyright p {
 /* Start Media Quary - Responsive for All Devices */
 
 @media (max-width:799px) {
-	#navber {
+	#navbar {
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
@@ -585,26 +585,33 @@ footer .copyright p {
 		height: 60vh;
 		width: 300px;
 		background-color: #e3e6f3;
-		box-shadow: 0px 30px 60px rgba(0, 0, 0, 0.1);
-		padding: 80px 0px 10px 0px;
+		box-shadow: 0px 30px 60px rgba(0, 0, 0, 0.5);
+		padding: 70px 0px 50px 0px;
 		border-radius: 5px;
-		transition: 0.2s;
+		transition: 0.3s;
 	}
-	#navber .active{
+	#navbar.active{
 		right: 0px;
 	}
-	#navber li {
+	#navbar li {
 		margin-bottom: 20px;
 		list-style: none;
 		padding: 0px 20px;
 	}
-	#navber li a{
+	#navbar li a{
 		text-decoration: none;
 		font-size: 20px;
 		font-weight: 700;
 		color: #088178;
 	}
-
+	#close .fas{
+		font-size: 35px;
+		font-weight: 700;
+		color: #088178;
+		position: absolute;
+		top: 20px;
+		left: 20px;
+	}
 	#mobile {
 		display: flex;
 		align-items: center;
