@@ -1,0 +1,67 @@
+<!-- details.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Registration Details</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+	button a{
+		color: white;
+		text-decoration: none;
+		font-weight: 700;
+	}
+  </style>
+</head>
+<body class="bg-light">
+  <div class="container py-4">
+    <div class="row justify-content-center">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+        <div class="card shadow p-4">
+          <h4 class="mb-4 text-center">Enter Your Details</h4>
+          <form action="submit.html" method="post">
+            <div class="mb-3">
+              <label for="firstName" class="form-label">First Name</label>
+              <input type="text" class="form-control" id="firstName" name="firstName" required>
+            </div>
+            <div class="mb-3">
+              <label for="lastName" class="form-label">Last Name</label>
+              <input type="text" class="form-control" id="lastName" name="lastName" required>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email ID</label>
+              <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+              <label for="aadhar" class="form-label">Aadhaar Card Number</label>
+              <input type="text" class="form-control" id="aadhar" name="aadhar" maxlength="12" required>
+            </div>
+            <div class="mb-3">
+              <label for="license" class="form-label">Driving Licence Number</label>
+              <input type="text" class="form-control" id="license" name="license" required>
+            </div>
+			<div class="mb-3">
+              <label for="license" class="form-label">Email ID</label>
+              <input type="text" class="form-control" id="license" name="license" required>
+            </div>
+			<div class="mb-3">
+              <label for="license" class="form-label">Creater Login ID</label>
+              <input type="email" class="form-control" id="license" name="license" required>
+            </div>
+			<div class="mb-3">
+              <label for="license" class="form-label">Create Login Password</label>
+              <input type="password" class="form-control" id="license" name="license" required>
+            </div>
+			<div class="mb-3">
+              <label for="license" class="form-label">Confrom Login Password</label>
+              <input type="password" class="form-control" id="license" name="license" required>
+            </div>
+            <button type="submit" class="btn btn-success w-100"><a href="AadharVerification.html">Submit</a></button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
