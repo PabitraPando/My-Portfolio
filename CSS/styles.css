@@ -165,8 +165,9 @@ nav ul li a:hover {
     left: 150px;
 }
 
-@media (max-width: 900px) {
+@media (min-width: 900px) {
     nav ul {
+        display: inline;
         flex-direction: column;
         align-items: center;
     }
@@ -186,6 +187,7 @@ nav ul li a:hover {
     }
 
     nav ul {
+        display: inline;
         flex-direction: column;
     }
 
@@ -194,11 +196,13 @@ nav ul li a:hover {
     }
 
     section {
-         padding: 10px 35px 35px;
+        padding: 10px 35px 35px;
     }
-    section p{
+
+    section p {
         font-size: 35px;
     }
+
     .contact_div {
         position: relative;
         left: 30px;
@@ -207,15 +211,20 @@ nav ul li a:hover {
     .contact_div li {
         font-size: 23px;
     }
+
     Project {
         display: inline;
-       justify-content: left;
+        justify-content: left;
     }
 }
 
 @media (min-width: 400px) {
     header {
         font-size: 1.2rem;
+    }
+
+    nav ul {
+        display: inline;
     }
 
     section {
