@@ -87,18 +87,22 @@
         <option value="jalukbari">Jalukbari</option>
       </select>
     </div>
-
     <!-- Location Details -->
     <div id="placeDetails" class="alert alert-info d-none"></div>
-
     <!-- Phone Input -->
+
+<form class="needs-validation" novalidate>
     <div class="mb-3">
       <label for="phoneInput" class="form-label">Mobile Number:</label>
-      <input type="tel" id="phoneInput" class="form-control" placeholder="e.g. 9876543210" />
+      <input type="tel" id="phoneInput" class="form-control" placeholder="e.g. 9876543210" pattern="^\d{10}$"
+        maxlength="10" required />
+      <div class="invalid-feedback">Please enter a valid 10-digit mobile number</div>
     </div>
+</form>
 
     <!-- OTP Button -->
-    <button class="btn btn-primary w-100" onclick="generateOTP()">Generate OTP</button>
+    <!-- OTP Button -->
+<button class="btn btn-primary w-100" onclick="validateAndGenerateOTP()">Generate OTP</button>
 
     <!-- OTP Input -->
     <div class="otp-box mt-3">
@@ -106,54 +110,63 @@
       <input type="text" id="otpInput" class="form-control" />
       <button class="btn btn-success w-100 mt-2" onclick="verifyOTP()">Confirm Booking</button>
     </div>
-
     <!-- Booking Summary -->
     <div class="booking-summary mt-4 alert alert-success" id="bookingSummary"></div>
   </div>
-
   <!-- Google Maps API -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
-	crossorigin="anonymous"></script>
+ <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8AjJOOD3K9qJlU_07gmKgPdd9mKeNsK0&callback=initMap">
+</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+    crossorigin="anonymous"></script>
   <!-- JS Logic -->
-  <script>
-    const placeInfo = {
-      panbazar: { lat: 26.1806, lng: 91.7539, info: "📍 Panbazar: Near Railway Station. 5 bikes available." },
-      khanapara: { lat: 26.1226, lng: 91.7896, info: "📍 Khanapara: Close to Zoo Gate. 3 bikes available." },
-      adabari: { lat: 26.1588, lng: 91.7076, info: "📍 Adabari: Bus Stand area. 2 bikes available." },
-      paltanbazar: { lat: 26.1844, lng: 91.7502, info: "📍 Paltan Bazar: Central hub. 4 bikes available." },
-      bhetapara: { lat: 26.1032, lng: 91.8081, info: "📍 Bhetapara: Residential zone. 2 bikes available." },
-      hatigaon: { lat: 26.1156, lng: 91.8123, info: "📍 Hatigaon: Near GMCH. 3 bikes available." },
-      ganeshguri: { lat: 26.1321, lng: 91.8013, info: "📍 Ganeshguri: Commercial area. 5 bikes available." },
-      maligaon: { lat: 26.1652, lng: 91.6854, info: "📍 Maligaon: Near Railway HQ. 2 bikes available." },
-      ulubari: { lat: 26.1782, lng: 91.7521, info: "📍 Ulubari: Near Nehru Stadium. 3 bikes available." },
-      bharalumukh: { lat: 26.1750, lng: 91.7360, info: "📍 Bharalumukh: Riverside zone. 2 bikes available." },
-      chandmari: { lat: 26.1891, lng: 91.7832, info: "📍 Chandmari: Cultural hub. 4 bikes available." },
-      narengi: { lat: 26.2101, lng: 91.8412, info: "📍 Narengi: Eastern edge. 1 bike available." },
-      noonmati: { lat: 26.2055, lng: 91.8233, info: "📍 Noonmati: Refinery area. 2 bikes available." },
-      lokhra: { lat: 26.1089, lng: 91.7410, info: "📍 Lokhra: Near ISBT. 3 bikes available." },
-      jalukbari: { lat: 26.1625, lng: 91.6850, info: "📍 Jalukbari: University zone. 4 bikes available." }
-    };
+  
 
-    let map, marker, generatedOTP = "";
+</body>
+<script>
+  const placeInfo = {
+    panbazar: { lat: 26.1806, lng: 91.7539, info: "📍 Panbazar: Near Railway Station. 5 bikes available." },
+    khanapara: { lat: 26.1226, lng: 91.7896, info: "📍 Khanapara: Close to Zoo Gate. 3 bikes available." },
+    adabari: { lat: 26.1588, lng: 91.7076, info: "📍 Adabari: Bus Stand area. 2 bikes available." },
+    paltanbazar: { lat: 26.1844, lng: 91.7502, info: "📍 Paltan Bazar: Central hub. 4 bikes available." },
+    bhetapara: { lat: 26.1032, lng: 91.8081, info: "📍 Bhetapara: Residential zone. 2 bikes available." },
+    hatigaon: { lat: 26.1156, lng: 91.8123, info: "📍 Hatigaon: Near GMCH. 3 bikes available." },
+    ganeshguri: { lat: 26.1321, lng: 91.8013, info: "📍 Ganeshguri: Commercial area. 5 bikes available." },
+    maligaon: { lat: 26.1652, lng: 91.6854, info: "📍 Maligaon: Near Railway HQ. 2 bikes available." },
+    ulubari: { lat: 26.1782, lng: 91.7521, info: "📍 Ulubari: Near Nehru Stadium. 3 bikes available." },
+    bharalumukh: { lat: 26.1750, lng: 91.7360, info: "📍 Bharalumukh: Riverside zone. 2 bikes available." },
+    chandmari: { lat: 26.1891, lng: 91.7832, info: "📍 Chandmari: Cultural hub. 4 bikes available." },
+    narengi: { lat: 26.2101, lng: 91.8412, info: "📍 Narengi: Eastern edge. 1 bike available." },
+    noonmati: { lat: 26.2055, lng: 91.8233, info: "📍 Noonmati: Refinery area. 2 bikes available." },
+    lokhra: { lat: 26.1089, lng: 91.7410, info: "📍 Lokhra: Near ISBT. 3 bikes available." },
+    jalukbari: { lat: 26.1625, lng: 91.6850, info: "📍 Jalukbari: University zone. 4 bikes available." }
+  };
 
-    function initMap() {
-      const center = { lat: 26.1445, lng: 91.7362 };
-      map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 13,
-        center: center
-      });
-    }
+  let map, marker, generatedOTP = "";
 
-    document.getElementById("placeSelect").addEventListener("change", function () {
+  function initMap() {
+    const center = { lat: 26.1445, lng: 91.7362 };
+    map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 13,
+      center: center
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const placeSelect = document.getElementById("placeSelect");
+    const detailsBox = document.getElementById("placeDetails");
+    const phoneInput = document.getElementById("phoneInput");
+
+    // Location change handler
+    placeSelect.addEventListener("change", function () {
       const selected = this.value;
-      const detailsBox = document.getElementById("placeDetails");
       if (placeInfo[selected]) {
-        detailsBox.textContent = placeInfo[selected].info;
+        const location = placeInfo[selected];
+        detailsBox.textContent = location.info;
         detailsBox.classList.remove("d-none");
 
-        const location = placeInfo[selected];
         map.setCenter({ lat: location.lat, lng: location.lng });
 
         if (marker) marker.setMap(null);
@@ -168,30 +181,62 @@
       }
     });
 
-    function generateOTP() {
+    // Reset validation on input
+    phoneInput.addEventListener("input", function () {
+      this.classList.remove("is-invalid");
+    });
+  });
+
+  function validateAndGenerateOTP() {
+    const phoneInput = document.getElementById("phoneInput");
+    const phoneNumber = phoneInput.value.trim();
+
+    const isValid = /^\d{10}$/.test(phoneNumber);
+
+    if (isValid) {
       generatedOTP = Math.floor(1000 + Math.random() * 9000).toString();
       alert("Your OTP is: " + generatedOTP);
       document.querySelector(".otp-box").style.display = "block";
+    } else {
+      phoneInput.classList.add("is-invalid");
+      phoneInput.focus();
     }
+  }
 
-    function verifyOTP() {
-      const entered = document.getElementById("otpInput").value;
-      const selectedPlace = document.getElementById("placeSelect").value;
-      const bookingSummary = document.getElementById("bookingSummary");
+  function verifyOTP() {
+    const entered = document.getElementById("otpInput").value.trim();
+    const selectedPlace = document.getElementById("placeSelect").value;
+    const bookingSummary = document.getElementById("bookingSummary");
 
-      if (entered === generatedOTP) {
-        bookingSummary.innerHTML = `
-          <h5>✅ Booking Confirmed!</h5>
-          <p><strong>Pickup Location:</strong> ${selectedPlace}</p>
-          <p><strong>Verified OTP:</strong> ${generatedOTP}</p>
-          <p>📅 Please arrive within 15 minutes to collect your bike.</p>
-        `;
-        bookingSummary.style.display = "block";
-      } else {
-        bookingSummary.innerHTML = `<div class="alert alert-danger">❌ Invalid OTP. Please try again.</div>`;
-        bookingSummary.style.display = "block";
-      }
+    if (entered === generatedOTP) {
+      bookingSummary.innerHTML = `
+        <h5>✅ Booking Confirmed!</h5>
+        <p><strong>Pickup Location:</strong> ${selectedPlace}</p>
+        <p><strong>Verified OTP:</strong> ${generatedOTP}</p>
+        <p>📅 Please arrive within 15 minutes to collect your bike.</p>
+      `;
+    } else {
+      bookingSummary.innerHTML = `<div class="alert alert-danger">❌ Invalid OTP. Please try again.</div>`;
     }
-  </script>
-</body>
+    bookingSummary.style.display = "block";
+  }
+
+  // Bootstrap form validation
+  (function () {
+    'use strict';
+    window.addEventListener('load', function () {
+      const forms = document.querySelectorAll('.needs-validation');
+      Array.from(forms).forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    });
+  })();
+</script>
+
 </html>
