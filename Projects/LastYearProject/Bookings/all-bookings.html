@@ -16,7 +16,8 @@
 		.booking-summary {
 			display: none;
 		}
-	</style><link rel="stylesheet" href="/My-Portfolio/Projects/LastYearProject/Home/univ.css">
+	</style>
+	<link rel="stylesheet" href="/My-Portfolio/Projects/LastYearProject/Home/univ.css">
 </head>
 
 <body>
@@ -56,6 +57,10 @@
 						<a class="nav-link"
 							href="/My-Portfolio/Projects/LastYearProject/Reviews/Reviews.html">Reviews</a>
 					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/My-Portfolio/Projects/LastYearProject/Bookings/all-bookings.html">My
+							Bookings</a>
+					</li>
 				</ul>
 				<!-- ✅ Login Form + Register Button -->
 				<form class="d-flex align-items-center" action="password.html" method="get">
@@ -69,49 +74,48 @@
 	</nav>
 	<!-- Nav Bar End -->
 	<!-- 📄 Page Title -->
-<div class="container mt-4">
-  <h2 class="text-center">All My Bookings</h2>
-  <div id="bookingList" class="mt-4"></div>
-</div>
+	<div class="container mt-4">
+		<h2 class="text-center">All My Bookings</h2>
+		<div id="bookingList" class="mt-4"></div>
+	</div>
+	<!-- 🧠 JS Logic -->
+	<script>
+		// Optional: Clear old test data (comment out in production)
+		// localStorage.removeItem("twboxBookings");
 
-<!-- 🧠 JS Logic -->
-<script>
-  // Optional: Clear old test data (comment out in production)
-  // localStorage.removeItem("twboxBookings");
+		function generateCode() {
+			return Math.floor(100000 + Math.random() * 900000).toString();
+		}
 
-  function generateCode() {
-    return Math.floor(100000 + Math.random() * 900000).toString();
-  }
+		function loadBookings() {
+			const container = document.getElementById("bookingList");
+			const bookings = JSON.parse(localStorage.getItem("twboxBookings")) || [];
 
-  function loadBookings() {
-    const container = document.getElementById("bookingList");
-    const bookings = JSON.parse(localStorage.getItem("twboxBookings")) || [];
+			const validBookings = bookings.filter(b =>
+				b.type && b.location && b.date && b.time && b.mobile && b.id
+			);
 
-    const validBookings = bookings.filter(b =>
-      b.type && b.location && b.date && b.time && b.mobile && b.id
-    );
-
-    if (validBookings.length === 0) {
-      container.innerHTML = `
+			if (validBookings.length === 0) {
+				container.innerHTML = `
         <div class="alert alert-info text-center">
           You haven’t booked anything yet. Head to the <a href="../Cycles/index.html">Booking Page</a> to get started!
         </div>
       `;
-      return;
-    }
+				return;
+			}
 
-    container.innerHTML = ""; // Clear previous content
+			container.innerHTML = ""; // Clear previous content
 
-    validBookings.forEach((booking) => {
-      // Ensure unlock code exists
-      if (!booking.code) booking.code = generateCode();
+			validBookings.forEach((booking) => {
+				// Ensure unlock code exists
+				if (!booking.code) booking.code = generateCode();
 
-      const badgeClass = booking.status === "Confirmed" ? "bg-success" :
-                         booking.status === "Pending" ? "bg-warning text-dark" :
-                         booking.status === "Cancelled" ? "bg-danger" :
-                         "bg-secondary";
+				const badgeClass = booking.status === "Confirmed" ? "bg-success" :
+					booking.status === "Pending" ? "bg-warning text-dark" :
+						booking.status === "Cancelled" ? "bg-danger" :
+							"bg-secondary";
 
-      container.innerHTML += `
+				container.innerHTML += `
         <div class="card mb-3 shadow-sm">
           <div class="card-body">
             <h5 class="card-title">🚲 ${booking.type}</h5>
@@ -128,27 +132,26 @@
           </div>
         </div>
       `;
-    });
+			});
 
-    // Save updated bookings with unlock codes
-    localStorage.setItem("twboxBookings", JSON.stringify(validBookings));
-  }
+			// Save updated bookings with unlock codes
+			localStorage.setItem("twboxBookings", JSON.stringify(validBookings));
+		}
 
-  function cancelBooking(id) {
-    const bookings = JSON.parse(localStorage.getItem("twboxBookings")) || [];
-    const updated = bookings.map(b => b.id === id ? { ...b, status: "Cancelled" } : b);
-    localStorage.setItem("twboxBookings", JSON.stringify(updated));
-    loadBookings();
-  }
+		function cancelBooking(id) {
+			const bookings = JSON.parse(localStorage.getItem("twboxBookings")) || [];
+			const updated = bookings.map(b => b.id === id ? { ...b, status: "Cancelled" } : b);
+			localStorage.setItem("twboxBookings", JSON.stringify(updated));
+			loadBookings();
+		}
 
-  function modifyBooking(id) {
-    alert("Redirecting to modification form for Booking ID: " + id);
-    // Example: window.location.href = `modify.html?id=${id}`;
-  }
+		function modifyBooking(id) {
+			alert("Redirecting to modification form for Booking ID: " + id);
+			// Example: window.location.href = `modify.html?id=${id}`;
+		}
 
-  window.onload = loadBookings;
-</script>
-
+		window.onload = loadBookings;
+	</script>
 </body>
 
 </html>
