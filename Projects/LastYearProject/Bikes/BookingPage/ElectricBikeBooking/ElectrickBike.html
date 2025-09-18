@@ -12,7 +12,7 @@
 </head>
 <body class="bg-light">
 
-  	<!-- Navigation Bar Starts -->
+ <!-- Navigation Bar Starts -->
 	<nav class="navbar navbar-expand-lg -tertiary sticky-top bg-green">
 		<div class="container-fluid">
 			<img src="/My-Portfolio/Projects/LastYearProject/Img/Logo/logo.jpg" alt="" srcset="" class="logo">
@@ -57,6 +57,7 @@
 	</nav>
 	<!-- Nav Bar End -->
 
+  <!-- 🛵 Booking Section -->
   <div class="container py-4">
     <h2 class="text-center mb-4">🏍️ You are booking an Electric Bike</h2>
 
@@ -65,54 +66,75 @@
       <div id="map"></div>
     </div>
 
-    <!-- Location Selector -->
-    <div class="mb-3">
-      <label for="placeSelect" class="form-label">Select Pickup Location:</label>
-      <select id="placeSelect" class="form-select">
-        <option value="">-- Choose --</option>
-        <option value="panbazar">Panbazar</option>
-        <option value="khanapara">Khanapara</option>
-        <option value="adabari">Adabari</option>
-        <option value="paltanbazar">Paltan Bazar</option>
-        <option value="bhetapara">Bhetapara</option>
-        <option value="hatigaon">Hatigaon</option>
-        <option value="ganeshguri">Ganeshguri</option>
-        <option value="maligaon">Maligaon</option>
-        <option value="ulubari">Ulubari</option>
-        <option value="bharalumukh">Bharalumukh</option>
-        <option value="chandmari">Chandmari</option>
-        <option value="narengi">Narengi</option>
-        <option value="noonmati">Noonmati</option>
-        <option value="lokhra">Lokhra</option>
-        <option value="jalukbari">Jalukbari</option>
-      </select>
-    </div>
-    <!-- Location Details -->
-    <div id="placeDetails" class="alert alert-info d-none"></div>
-    <!-- Phone Input -->
+    <!-- 📋 Booking Form -->
+    <form class="needs-validation" novalidate>
+      <!-- Location Selector -->
+      <div class="mb-3">
+        <label for="placeSelect" class="form-label">Select Pickup Location:</label>
+        <select id="placeSelect" class="form-select" required>
+          <option value="">-- Choose --</option>
+          <option value="panbazar">Panbazar</option>
+          <option value="khanapara">Khanapara</option>
+          <option value="adabari">Adabari</option>
+          <option value="paltanbazar">Paltan Bazar</option>
+          <option value="bhetapara">Bhetapara</option>
+          <option value="hatigaon">Hatigaon</option>
+          <option value="ganeshguri">Ganeshguri</option>
+          <option value="maligaon">Maligaon</option>
+          <option value="ulubari">Ulubari</option>
+          <option value="bharalumukh">Bharalumukh</option>
+          <option value="chandmari">Chandmari</option>
+          <option value="narengi">Narengi</option>
+          <option value="noonmati">Noonmati</option>
+          <option value="lokhra">Lokhra</option>
+          <option value="jalukbari">Jalukbari</option>
+        </select>
+        <div class="invalid-feedback">Please select a pickup location</div>
+      </div>
 
-<form class="needs-validation" novalidate>
-    <div class="mb-3">
-      <label for="phoneInput" class="form-label">Mobile Number:</label>
-      <input type="tel" id="phoneInput" class="form-control" placeholder="e.g. 9876543210" pattern="^\d{10}$"
-        maxlength="10" required />
-      <div class="invalid-feedback">Please enter a valid 10-digit mobile number</div>
-    </div>
-</form>
+      <!-- Location Details -->
+      <div id="placeDetails" class="alert alert-info d-none"></div>
 
-    <!-- OTP Button -->
-    <!-- OTP Button -->
-<button class="btn btn-primary w-100" onclick="validateAndGenerateOTP()">Generate OTP</button>
+      <!-- Mobile Number -->
+      <div class="mb-3">
+        <label for="phoneInput" class="form-label">Mobile Number:</label>
+        <input type="tel" id="phoneInput" class="form-control" placeholder="e.g. 9876543210" pattern="^\d{10}$" maxlength="10" required />
+        <div class="invalid-feedback">Please enter a valid 10-digit mobile number</div>
+      </div>
 
-    <!-- OTP Input -->
+      <!-- Vehicle Type -->
+      <div class="mb-3">
+        <label for="vehicleType" class="form-label">Vehicle Type:</label>
+        <input type="text" id="vehicleType" class="form-control" value="Electric Bike" readonly />
+      </div>
+
+      <!-- Booking Date -->
+      <div class="mb-3">
+        <label for="bookingDate" class="form-label">Booking Date:</label>
+        <input type="date" id="bookingDate" class="form-control" required />
+      </div>
+
+      <!-- Booking Time -->
+      <div class="mb-3">
+        <label for="bookingTime" class="form-label">Booking Time:</label>
+        <input type="time" id="bookingTime" class="form-control" required />
+      </div>
+
+      <!-- OTP Button -->
+      <button type="button" class="btn btn-primary w-100" onclick="validateAndGenerateOTP()">Generate OTP</button>
+    </form>
+
+    <!-- 🔐 OTP Input -->
     <div class="otp-box mt-3">
       <label for="otpInput" class="form-label">Enter OTP:</label>
       <input type="text" id="otpInput" class="form-control" />
-      <button class="btn btn-success w-100 mt-2" onclick="verifyOTP()">Confirm Booking</button>
+      <button id="verifyBtn" class="btn btn-success w-100 mt-2" onclick="verifyOTP()">Confirm Booking</button>
     </div>
-    <!-- Booking Summary -->
+
+    <!-- ✅ Booking Summary -->
     <div class="booking-summary mt-4 alert alert-success" id="bookingSummary"></div>
   </div>
+
   <!-- Google Maps API -->
  <script async defer
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8AjJOOD3K9qJlU_07gmKgPdd9mKeNsK0&callback=initMap">
@@ -121,122 +143,132 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
     crossorigin="anonymous"></script>
-  <!-- JS Logic -->
-  
-
-</body>
+  <!-- 🧠 JS Logic -->
 <script>
-  const placeInfo = {
-    panbazar: { lat: 26.1806, lng: 91.7539, info: "📍 Panbazar: Near Railway Station. 5 bikes available." },
-    khanapara: { lat: 26.1226, lng: 91.7896, info: "📍 Khanapara: Close to Zoo Gate. 3 bikes available." },
-    adabari: { lat: 26.1588, lng: 91.7076, info: "📍 Adabari: Bus Stand area. 2 bikes available." },
-    paltanbazar: { lat: 26.1844, lng: 91.7502, info: "📍 Paltan Bazar: Central hub. 4 bikes available." },
-    bhetapara: { lat: 26.1032, lng: 91.8081, info: "📍 Bhetapara: Residential zone. 2 bikes available." },
-    hatigaon: { lat: 26.1156, lng: 91.8123, info: "📍 Hatigaon: Near GMCH. 3 bikes available." },
-    ganeshguri: { lat: 26.1321, lng: 91.8013, info: "📍 Ganeshguri: Commercial area. 5 bikes available." },
-    maligaon: { lat: 26.1652, lng: 91.6854, info: "📍 Maligaon: Near Railway HQ. 2 bikes available." },
-    ulubari: { lat: 26.1782, lng: 91.7521, info: "📍 Ulubari: Near Nehru Stadium. 3 bikes available." },
-    bharalumukh: { lat: 26.1750, lng: 91.7360, info: "📍 Bharalumukh: Riverside zone. 2 bikes available." },
-    chandmari: { lat: 26.1891, lng: 91.7832, info: "📍 Chandmari: Cultural hub. 4 bikes available." },
-    narengi: { lat: 26.2101, lng: 91.8412, info: "📍 Narengi: Eastern edge. 1 bike available." },
-    noonmati: { lat: 26.2055, lng: 91.8233, info: "📍 Noonmati: Refinery area. 2 bikes available." },
-    lokhra: { lat: 26.1089, lng: 91.7410, info: "📍 Lokhra: Near ISBT. 3 bikes available." },
-    jalukbari: { lat: 26.1625, lng: 91.6850, info: "📍 Jalukbari: University zone. 4 bikes available." }
-  };
+const placeInfo = {
+  panbazar: { lat: 26.1806, lng: 91.7539, info: "📍 Panbazar: Near Railway Station. 5 bikes available." },
+  khanapara: { lat: 26.1226, lng: 91.7896, info: "📍 Khanapara: Close to Zoo Gate. 3 bikes available." },
+  adabari: { lat: 26.1588, lng: 91.7076, info: "📍 Adabari: Bus Stand area. 2 bikes available." },
+  paltanbazar: { lat: 26.1844, lng: 91.7502, info: "📍 Paltan Bazar: Central hub. 4 bikes available." },
+  bhetapara: { lat: 26.1032, lng: 91.8081, info: "📍 Bhetapara: Residential zone. 2 bikes available." },
+  hatigaon: { lat: 26.1156, lng: 91.8123, info: "📍 Hatigaon: Near GMCH. 3 bikes available." },
+  ganeshguri: { lat: 26.1321, lng: 91.8013, info: "📍 Ganeshguri: Commercial area. 5 bikes available." },
+  maligaon: { lat: 26.1652, lng: 91.6854, info: "📍 Maligaon: Near Railway HQ. 2 bikes available." },
+  ulubari: { lat: 26.1782, lng: 91.7521, info: "📍 Ulubari: Near Nehru Stadium. 3 bikes available." },
+  bharalumukh: { lat: 26.1750, lng: 91.7360, info: "📍 Bharalumukh: Riverside zone. 2 bikes available." },
+  chandmari: { lat: 26.1891, lng: 91.7832, info: "📍 Chandmari: Cultural hub. 4 bikes available." },
+  narengi: { lat: 26.2101, lng: 91.8412, info: "📍 Narengi: Eastern edge. 1 bike available." },
+  noonmati: { lat: 26.2055, lng: 91.8233, info: "📍 Noonmati: Refinery area. 2 bikes available." },
+  lokhra: { lat: 26.1089, lng: 91.7410, info: "📍 Lokhra: Near ISBT. 3 bikes available." },
+  jalukbari: { lat: 26.1625, lng: 91.6850, info: "📍 Jalukbari: University zone. 4 bikes available." }
+};
 
-  let map, marker, generatedOTP = "";
+let map, marker, generatedOTP = "";
 
-  function initMap() {
-    const center = { lat: 26.1445, lng: 91.7362 };
-    map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 13,
-      center: center
-    });
-  }
+function initMap() {
+  const center = { lat: 26.1445, lng: 91.7362 };
+  map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 13,
+    center: center
+  });
+}
 
-  document.addEventListener("DOMContentLoaded", function () {
-    const placeSelect = document.getElementById("placeSelect");
-    const detailsBox = document.getElementById("placeDetails");
-    const phoneInput = document.getElementById("phoneInput");
+document.addEventListener("DOMContentLoaded", function () {
+  const placeSelect = document.getElementById("placeSelect");
+  const detailsBox = document.getElementById("placeDetails");
+  const phoneInput = document.getElementById("phoneInput");
 
-    // Location change handler
-    placeSelect.addEventListener("change", function () {
-      const selected = this.value;
-      if (placeInfo[selected]) {
-        const location = placeInfo[selected];
-        detailsBox.textContent = location.info;
-        detailsBox.classList.remove("d-none");
+  // Auto-fill today's date and time
+  const today = new Date().toISOString().split("T")[0];
+  document.getElementById("bookingDate").value = today;
+  const now = new Date();
+  const timeNow = now.toTimeString().slice(0, 5);
+  document.getElementById("bookingTime").value = timeNow;
 
-        map.setCenter({ lat: location.lat, lng: location.lng });
+  placeSelect.addEventListener("change", function () {
+    const selected = this.value;
+    if (placeInfo[selected]) {
+      const location = placeInfo[selected];
+      detailsBox.textContent = location.info;
+      detailsBox.classList.remove("d-none");
 
-        if (marker) marker.setMap(null);
-        marker = new google.maps.Marker({
-          position: { lat: location.lat, lng: location.lng },
-          map: map,
-          title: selected
-        });
-      } else {
-        detailsBox.classList.add("d-none");
-        if (marker) marker.setMap(null);
-      }
-    });
+      map.setCenter({ lat: location.lat, lng: location.lng });
 
-    // Reset validation on input
-    phoneInput.addEventListener("input", function () {
-      this.classList.remove("is-invalid");
-    });
+      if (marker) marker.setMap(null);
+      marker = new google.maps.Marker({
+        position: { lat: location.lat, lng: location.lng },
+        map: map,
+        title: selected
+      });
+    } else {
+      detailsBox.classList.add("d-none");
+      if (marker) marker.setMap(null);
+    }
   });
 
-  function validateAndGenerateOTP() {
-    const phoneInput = document.getElementById("phoneInput");
-    const phoneNumber = phoneInput.value.trim();
+  phoneInput.addEventListener("input", function () {
+    this.classList.remove("is-invalid");
+  });
+});
 
-    const isValid = /^\d{10}$/.test(phoneNumber);
+function validateAndGenerateOTP() {
+  const phoneInput = document.getElementById("phoneInput");
+  const phoneNumber = phoneInput.value.trim();
 
-    if (isValid) {
-      generatedOTP = Math.floor(1000 + Math.random() * 9000).toString();
-      alert("Your OTP is: " + generatedOTP);
-      document.querySelector(".otp-box").style.display = "block";
-    } else {
-      phoneInput.classList.add("is-invalid");
-      phoneInput.focus();
-    }
+  const isValid = /^\d{10}$/.test(phoneNumber);
+
+  if (isValid) {
+    generatedOTP = Math.floor(1000 + Math.random() * 9000).toString();
+    alert("Your OTP is: " + generatedOTP);
+    document.querySelector(".otp-box").style.display = "block";
+  } else {
+    phoneInput.classList.add("is-invalid");
+    phoneInput.focus();
+  }
+}
+
+function verifyOTP() {
+  const entered = document.getElementById("otpInput").value.trim();
+  const selectedPlace = document.getElementById("placeSelect").value;
+  const bookingSummary = document.getElementById("bookingSummary");
+  const mobile = document.getElementById("phoneInput").value.trim();
+  const type = document.getElementById("vehicleType").value;
+  const date = document.getElementById("bookingDate").value;
+  const time = document.getElementById("bookingTime").value;
+
+  if (entered === generatedOTP) {
+    const bookingData = {
+      id: "TW" + Date.now(),
+      type,
+      location: selectedPlace,
+      date,
+      time,
+      mobile,
+      status: "Confirmed"
+    };
+
+    let allBookings = JSON.parse(localStorage.getItem("twboxBookings")) || [];
+    allBookings.push(bookingData);
+    localStorage.setItem("twboxBookings", JSON.stringify(allBookings));
+
+    bookingSummary.innerHTML = `
+      <h5>✅ Booking Confirmed!</h5>
+      <p><strong>Pickup Location:</strong> ${selectedPlace}</p>
+      <p><strong>Verified OTP:</strong> ${generatedOTP}</p>
+      <p>📅 Please arrive within 15 minutes to collect your ${type}.</p>
+      <a href="/My-Portfolio/Projects/LastYearProject/Bookings/all-bookings.html" class="btn btn-info mt-3 w-100">
+        📋 View All Bookings
+      </a>
+    `;
+  } else {
+    bookingSummary.innerHTML = `<div class="alert alert-danger">❌ Invalid OTP. Please try again.</div>`;
   }
 
-  function verifyOTP() {
-    const entered = document.getElementById("otpInput").value.trim();
-    const selectedPlace = document.getElementById("placeSelect").value;
-    const bookingSummary = document.getElementById("bookingSummary");
-
-    if (entered === generatedOTP) {
-      bookingSummary.innerHTML = `
-        <h5>✅ Booking Confirmed!</h5>
-        <p><strong>Pickup Location:</strong> ${selectedPlace}</p>
-        <p><strong>Verified OTP:</strong> ${generatedOTP}</p>
-        <p>📅 Please arrive within 15 minutes to collect your bike.</p>
-      `;
-    } else {
-      bookingSummary.innerHTML = `<div class="alert alert-danger">❌ Invalid OTP. Please try again.</div>`;
-    }
-    bookingSummary.style.display = "block";
-  }
-
-  // Bootstrap form validation
-  (function () {
-    'use strict';
-    window.addEventListener('load', function () {
-      const forms = document.querySelectorAll('.needs-validation');
-      Array.from(forms).forEach(function (form) {
-        form.addEventListener('submit', function (event) {
-          if (!form.checkValidity()) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-          form.classList.add('was-validated');
-        }, false);
-      });
-    });
-  })();
+  bookingSummary.style.display = "block";
+}
 </script>
 
+<!-- 🧱 Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
