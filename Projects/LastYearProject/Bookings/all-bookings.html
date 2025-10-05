@@ -78,7 +78,65 @@
   <h2 class="text-center">All My Bookings</h2>
   <button class="btn btn-danger mt-3" onclick="clearCancelled()">Clear Cancelled Bookings</button>
   <div id="bookingList" class="mt-4"></div>
+  <!-- 🛠️ Modify Modal -->
+<div class="modal fade" id="modifyModal" tabindex="-1" aria-labelledby="modifyLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form onsubmit="saveModifiedBooking(event)">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modifyLabel">Modify Pickup Location</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="modifyId">
+
+          <!-- Read-only fields -->
+          <div class="mb-2">
+            <label class="form-label">Date</label>
+            <input type="text" class="form-control" id="readonlyDate" readonly>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Time</label>
+            <input type="text" class="form-control" id="readonlyTime" readonly>
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Mobile</label>
+            <input type="text" class="form-control" id="readonlyMobile" readonly>
+          </div>
+
+          <!-- Editable Pickup Location -->
+          <div class="mb-3">
+            <label for="placeSelect" class="form-label">Select Pickup Location:</label>
+            <select id="placeSelect" class="form-select" required>
+              <option value="">-- Choose --</option>
+              <option value="Panbazar">Panbazar</option>
+              <option value="Khanapara">Khanapara</option>
+              <option value="Adabari">Adabari</option>
+              <option value="Paltan Bazar">Paltan Bazar</option>
+              <option value="Bhetapara">Bhetapara</option>
+              <option value="Hatigaon">Hatigaon</option>
+              <option value="Ganeshguri">Ganeshguri</option>
+              <option value="Maligaon">Maligaon</option>
+              <option value="Ulubari">Ulubari</option>
+              <option value="Bharalumukh">Bharalumukh</option>
+              <option value="Chandmari">Chandmari</option>
+              <option value="Narengi">Narengi</option>
+              <option value="Noonmati">Noonmati</option>
+              <option value="Lokhra">Lokhra</option>
+              <option value="Jalukbari">Jalukbari</option>
+            </select>
+            <div class="invalid-feedback">Please select a pickup location</div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Save Changes</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
+
 
 <!-- 🧠 JS Logic -->
 <script>
@@ -100,7 +158,7 @@
     if (validBookings.length === 0) {
       container.innerHTML = `
         <div class="alert alert-info text-center">
-          You haven’t booked anything yet. Head to the <a href="../Cycles/index.html">Booking Page</a> to get started!
+          You haven’t booked anything yet. Head to the <a href="/My-Portfolio/Projects/LastYearProject/Home/univ.html">Home Page</a> to get started!
         </div>
       `;
       return;
@@ -109,7 +167,6 @@
     container.innerHTML = ""; // Clear previous content
 
     validBookings.forEach((booking) => {
-      // Ensure unlock code exists
       if (!booking.code) booking.code = generateCode();
 
       const badgeClass = booking.status === "Confirmed" ? "bg-success" :
@@ -127,6 +184,7 @@
             <p class="card-text">🆔 Booking ID: ${booking.id}</p>
             <p class="card-text">🔐 Unlock Code: <strong>${booking.code}</strong></p>
             <span class="badge ${badgeClass}">${booking.status}</span>
+            ${booking.modifiedAt ? `<p class="text-muted">🕒 Modified: ${booking.modifiedAt}</p>` : ""}
             <div class="mt-3">
               <button class="btn btn-outline-danger btn-sm me-2" onclick="cancelBooking('${booking.id}')">Cancel</button>
               <button class="btn btn-outline-primary btn-sm" onclick="modifyBooking('${booking.id}')">Modify</button>
@@ -136,7 +194,6 @@
       `;
     });
 
-    // Save updated bookings with unlock codes
     localStorage.setItem("twboxBookings", JSON.stringify(validBookings));
   }
 
@@ -147,11 +204,6 @@
     loadBookings();
   }
 
-  function modifyBooking(id) {
-    alert("Redirecting to modification form for Booking ID: " + id);
-    // Example: window.location.href = `modify.html?id=${id}`;
-  }
-
   function clearCancelled() {
     const bookings = JSON.parse(localStorage.getItem("twboxBookings")) || [];
     const filtered = bookings.filter(b => b.status !== "Cancelled");
@@ -159,10 +211,48 @@
     loadBookings();
   }
 
+  function modifyBooking(id) {
+    const bookings = JSON.parse(localStorage.getItem("twboxBookings")) || [];
+    const booking = bookings.find(b => b.id === id);
+    if (!booking || booking.status === "Cancelled") return;
+
+    document.getElementById("modifyId").value = booking.id;
+    document.getElementById("readonlyDate").value = booking.date;
+    document.getElementById("readonlyTime").value = booking.time;
+    document.getElementById("readonlyMobile").value = booking.mobile;
+    document.getElementById("placeSelect").value = booking.location;
+
+    const modal = new bootstrap.Modal(document.getElementById("modifyModal"));
+    modal.show();
+  }
+
+  function saveModifiedBooking(event) {
+    event.preventDefault();
+    const id = document.getElementById("modifyId").value;
+    const newLocation = document.getElementById("placeSelect").value;
+    const modifiedTime = new Date().toLocaleString("en-IN", {
+      hour: "2-digit", minute: "2-digit", second: "2-digit",
+      day: "2-digit", month: "short", year: "numeric"
+    });
+
+    const bookings = JSON.parse(localStorage.getItem("twboxBookings")) || [];
+    const updated = bookings.map(b => b.id === id ? {
+      ...b,
+      location: newLocation,
+      modifiedAt: modifiedTime
+    } : b);
+
+    localStorage.setItem("twboxBookings", JSON.stringify(updated));
+    loadBookings();
+
+    const modal = bootstrap.Modal.getInstance(document.getElementById("modifyModal"));
+    modal.hide();
+  }
+
   window.onload = loadBookings;
 </script>
 
-	
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
