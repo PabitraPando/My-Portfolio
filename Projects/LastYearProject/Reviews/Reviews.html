@@ -115,7 +115,8 @@
         <form id="reviewForm">
           <div class="row g-3">
             <div class="col-md-6">
-              <input type="text" class="form-control" id="nameInput" placeholder="Your Name" required>
+              <input type="text" class="form-control" id="nameInput" placeholder="Your Name" pattern="^[A-Za-z\s]+$"
+                title="Only English letters and spaces are allowed" required>
             </div>
             <div class="col-md-6">
               <input type="text" class="form-control" id="professionInput" placeholder="Your Profession" required>
@@ -148,14 +149,35 @@
   <!-- Footer Section ends -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-  document.getElementById("reviewForm").addEventListener("submit", function(e) {
+  document.getElementById("reviewForm").addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const name = document.getElementById("nameInput").value.trim();
-    const profession = document.getElementById("professionInput").value.trim();
-    const comment = document.getElementById("commentInput").value.trim();
+    const nameField = document.getElementById("nameInput");
+    const professionField = document.getElementById("professionInput");
+    const commentField = document.getElementById("commentInput");
 
-    if (name && profession && comment) {
+    const name = nameField.value.trim();
+    const profession = professionField.value.trim();
+    const comment = commentField.value.trim();
+
+    // Clear previous custom validity
+    nameField.setCustomValidity("");
+
+    // Validate name: only English letters and spaces
+    const namePattern = /^[A-Za-z\s]+$/;
+    let valid = true;
+
+    if (!namePattern.test(name)) {
+      nameField.style.borderColor = "red";
+      nameField.setCustomValidity("❌ Please enter a valid name using only English letters and spaces.");
+      alert(nameField.validationMessage);
+      valid = false;
+    } else {
+      nameField.style.borderColor = "#ccc";
+    }
+
+    // If all fields are valid, add the review
+    if (valid && name && profession && comment) {
       const reviewHTML = `
         <div class="col-md-6 col-lg-4">
           <div class="card shadow-sm h-100">

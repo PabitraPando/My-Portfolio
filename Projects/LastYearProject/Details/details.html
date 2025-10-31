@@ -1,67 +1,124 @@
 <!-- details.html -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Registration Details</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-	button a{
-		color: white;
-		text-decoration: none;
-		font-weight: 700;
-	}
+    button a {
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+    }
   </style>
 </head>
+
 <body class="bg-light">
   <div class="container py-4">
     <div class="row justify-content-center">
       <div class="col-12 col-sm-10 col-md-8 col-lg-6">
         <div class="card shadow p-4">
           <h4 class="mb-4 text-center">Enter Your Details</h4>
-          <form action="submit.html" method="post">
-            <div class="mb-3">
-              <label for="firstName" class="form-label">First Name</label>
-              <input type="text" class="form-control" id="firstName" name="firstName" required>
-            </div>
-            <div class="mb-3">
-              <label for="lastName" class="form-label">Last Name</label>
-              <input type="text" class="form-control" id="lastName" name="lastName" required>
-            </div>
-            <div class="mb-3">
-              <label for="email" class="form-label">Email ID</label>
-              <input type="email" class="form-control" id="email" name="email" required>
-            </div>
-            <div class="mb-3">
-              <label for="aadhar" class="form-label">Aadhaar Card Number</label>
-              <input type="text" class="form-control" id="aadhar" name="aadhar" maxlength="12" required>
-            </div>
-            <div class="mb-3">
-              <label for="license" class="form-label">Driving Licence Number</label>
-              <input type="text" class="form-control" id="license" name="license" required>
-            </div>
-			<div class="mb-3">
-              <label for="license" class="form-label">Email ID</label>
-              <input type="text" class="form-control" id="license" name="license" required>
-            </div>
-			<div class="mb-3">
-              <label for="license" class="form-label">Creater Login ID</label>
-              <input type="email" class="form-control" id="license" name="license" required>
-            </div>
-			<div class="mb-3">
-              <label for="license" class="form-label">Create Login Password</label>
-              <input type="password" class="form-control" id="license" name="license" required>
-            </div>
-			<div class="mb-3">
-              <label for="license" class="form-label">Confrom Login Password</label>
-              <input type="password" class="form-control" id="license" name="license" required>
-            </div>
-            <button type="submit" class="btn btn-success w-100"><a href="/My-Portfolio/Projects/LastYearProject/AadharVerification/AadharVerification.html">Submit</a></button>
-          </form>
-        </div>
-      </div>
-    </div>
+         <form id="registrationForm">
+  <div class="mb-3">
+    <label for="firstName" class="form-label">First Name</label>
+    <input type="text" class="form-control" id="firstName" name="firstName" pattern="^[A-Za-z]+$"
+      title="Only English letters are allowed" required>
   </div>
-</body>
+  <div class="mb-3">
+    <label for="lastName" class="form-label">Last Name</label>
+    <input type="text" class="form-control" id="lastName" name="lastName" pattern="^[A-Za-z]+$"
+      title="Only English letters are allowed" required>
+  </div>
+  <div class="mb-3">
+    <label for="email" class="form-label">Email ID</label>
+    <input type="email" class="form-control" id="email" name="email" required>
+  </div>
+  <div class="mb-3">
+    <label for="aadhar" class="form-label">Aadhaar Card Number</label>
+    <input type="text" class="form-control" id="aadhar" name="aadhar" pattern="^\d{12}$"
+      title="Enter exactly 12 digits" required>
+  </div>
+  <div class="mb-3">
+    <label for="licenseNumber" class="form-label">Driving Licence Number</label>
+    <input type="text" class="form-control" id="licenseNumber" name="licenseNumber"
+      pattern="^[A-Z]{2}[0-9]{2}[0-9A-Z]{11}$" title="Enter valid Indian DL format" required>
+  </div>
+  <div class="mb-3">
+    <label for="loginID" class="form-label">Creator Login ID</label>
+    <input type="email" class="form-control" id="loginID" name="loginID" required>
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Create Login Password</label>
+    <input type="password" class="form-control" id="password" name="password"
+      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+      title="Minimum 8 characters, include uppercase, lowercase, number, and special character" required>
+  </div>
+  <div class="mb-3">
+    <label for="confirmPassword" class="form-label">Confirm Login Password</label>
+    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+  </div>
+  <button type="submit" class="btn btn-success w-100">Submit</button>
+</form>
+
+<script>
+  document.getElementById("registrationForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const firstName = form.firstName;
+    const lastName = form.lastName;
+    const email = form.email;
+    const aadhar = form.aadhar;
+    const license = form.licenseNumber;
+    const loginID = form.loginID;
+    const password = form.password;
+    const confirmPassword = form.confirmPassword;
+
+    let valid = true;
+
+    // Validate each field
+    [firstName, lastName, email, aadhar, license, loginID, password].forEach(field => {
+      if (!field.checkValidity()) {
+        field.style.borderColor = "red";
+        valid = false;
+      } else {
+        field.style.borderColor = "#ccc";
+      }
+    });
+
+    // Clear previous custom validity
+    confirmPassword.setCustomValidity("");
+
+    // Confirm password match
+    if (password.value !== confirmPassword.value) {
+      confirmPassword.style.borderColor = "red";
+      confirmPassword.setCustomValidity("Passwords do not match");
+      valid = false;
+    } else {
+      confirmPassword.style.borderColor = "#ccc";
+    }
+
+    // Final check
+    if (!valid) {
+      alert("❌ Please correct the highlighted fields.");
+    } else {
+      // Save credentials to localStorage
+      localStorage.setItem("loginID", loginID.value.trim());
+      localStorage.setItem("password", password.value); // ⚠️ Not secure for production
+
+      alert("✅ Registration successful!");
+
+      // Redirect to Aadhaar Verification page
+      window.location.href = "/My-Portfolio/Projects/LastYearProject/AadharVerification/AadharVerification.html";
+    }
+  });
+</script>
+
+
+
+
 </html>

@@ -56,7 +56,7 @@
         <!-- ✅ Login Form + Register Button -->
         <form class="d-flex align-items-center" action="/My-Portfolio/Projects/LastYearProject/Password/password.html"
           method="get" id="loginForm">
-          <input class="form-control me-2" type="text" name="loginID" id="loginID" placeholder="Login ID" required />
+          <input class="form-control me-2" type="email" name="loginID" id="loginID" placeholder="Login ID" required />
           <button class="btn btn-outline-light me-2 fw-bold" type="submit" id="loginBtn" disabled> Login </button>
           <a href="/My-Portfolio/Projects/LastYearProject/Details/details.html" class="btn btn-warning">Register</a>
         </form>
@@ -318,13 +318,34 @@
   <!-- Footer Section ends -->
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script><script>
-  const loginInput = document.getElementById('loginID');
-  const loginBtn = document.getElementById('loginBtn');
+  integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+  
+  <script>
+  const loginInput = document.getElementById("loginID");
+  const loginBtn = document.getElementById("loginBtn");
 
-  loginInput.addEventListener('input', () => {
-    loginBtn.disabled = loginInput.value.trim() === '';
+  // Enable login button when input is not empty
+  loginInput.addEventListener("input", () => {
+    loginBtn.disabled = loginInput.value.trim() === "";
+  });
+
+  // Handle login click
+  loginBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    const enteredEmail = loginInput.value.trim();
+    const storedEmail = localStorage.getItem("loginID");
+    const storedPassword = localStorage.getItem("password");
+
+    const enteredPassword = prompt("Enter your password:");
+
+    if (enteredEmail === storedEmail && enteredPassword === storedPassword) {
+      alert("✅ Login successful!");
+      // You can redirect here: window.location.href = "dashboard.html";
+    } else {
+      alert("❌ Invalid credentials. Please try again.");
+    }
   });
 </script>
+
 
 </html>
