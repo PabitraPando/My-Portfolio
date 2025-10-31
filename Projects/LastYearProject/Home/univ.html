@@ -54,12 +54,12 @@
           </li>
         </ul>
         <!-- ✅ Login Form + Register Button -->
-        <form class="d-flex align-items-center" action="/My-Portfolio/Projects/LastYearProject/Password/password.html"
-          method="get" id="loginForm">
-          <input class="form-control me-2" type="email" name="loginID" id="loginID" placeholder="Login ID" required />
-          <button class="btn btn-outline-light me-2 fw-bold" type="submit" id="loginBtn" disabled> Login </button>
-          <a href="/My-Portfolio/Projects/LastYearProject/Details/details.html" class="btn btn-warning">Register</a>
-        </form>
+        <form class="d-flex align-items-center" id="loginForm">
+  <input class="form-control me-2" type="email" name="loginID" id="loginID" placeholder="Login ID" required />
+  <button class="btn btn-outline-light me-2 fw-bold" type="button" id="loginBtn" disabled>Login</button>
+  <a href="/My-Portfolio/Projects/LastYearProject/Details/details.html" class="btn btn-warning">Register</a>
+</form>
+
       </div>
     </div>
   </nav>
@@ -319,33 +319,103 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
-  
-  <script>
+<script>
+  // Inject styles
+  const style = document.createElement("style");
+  style.textContent = `
+    .popup-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .popup-box {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      width: 300px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+    .popup-box input {
+      width: 100%;
+      padding: 8px;
+      margin: 10px 0;
+    }
+    .popup-box button {
+      margin: 5px;
+      padding: 6px 12px;
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Create password popup
+  const popup = document.createElement("div");
+  popup.id = "passwordPopup";
+  popup.className = "popup-overlay";
+  popup.innerHTML = `
+    <div class="popup-box">
+      <h3>Enter Your Password</h3>
+      <input type="password" id="passwordInput" placeholder="Password" required />
+      <div>
+        <button id="submitPassword">Login</button>
+        <button id="cancelPopup">Cancel</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(popup);
+
+  // Setup login logic
   const loginInput = document.getElementById("loginID");
   const loginBtn = document.getElementById("loginBtn");
+  const loginForm = document.getElementById("loginForm");
+  const passwordPopup = document.getElementById("passwordPopup");
+  const passwordInput = document.getElementById("passwordInput");
+  const submitPassword = document.getElementById("submitPassword");
+  const cancelPopup = document.getElementById("cancelPopup");
+
+  let enteredEmail = "";
 
   // Enable login button when input is not empty
   loginInput.addEventListener("input", () => {
     loginBtn.disabled = loginInput.value.trim() === "";
   });
 
-  // Handle login click
-  loginBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    const enteredEmail = loginInput.value.trim();
+  // Show password popup on login button click
+  loginBtn.addEventListener("click", function () {
+    enteredEmail = loginInput.value.trim();
+    passwordInput.value = "";
+    passwordPopup.style.display = "flex";
+    passwordInput.focus();
+  });
+
+  // Handle password submission
+  submitPassword.addEventListener("click", function () {
     const storedEmail = localStorage.getItem("loginID");
     const storedPassword = localStorage.getItem("password");
-
-    const enteredPassword = prompt("Enter your password:");
+    const enteredPassword = passwordInput.value;
 
     if (enteredEmail === storedEmail && enteredPassword === storedPassword) {
       alert("✅ Login successful!");
-      // You can redirect here: window.location.href = "dashboard.html";
+      passwordPopup.style.display = "none";
+      window.location.href = "univ.html";
     } else {
       alert("❌ Invalid credentials. Please try again.");
+      passwordInput.value = "";
+      passwordInput.focus();
     }
   });
+
+  // Cancel popup
+  cancelPopup.addEventListener("click", function () {
+    passwordPopup.style.display = "none";
+  });
 </script>
+
 
 
 </html>
